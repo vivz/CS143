@@ -105,6 +105,13 @@ header {
     color: white
 }
 
+.search-box{
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    display: block;
+    width: 20%;
+}
 
 /* USER SETTINGS DIV */
 .user-settings-wrapper .nav > li > a {
