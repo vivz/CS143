@@ -8,7 +8,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Free Responsive Admin Theme - ZONTAL</title>
+    <title>CS 143 Project 1C</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICONS  -->
@@ -28,16 +28,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>Email: </strong>info@yourdomain.com
+                    CS143 Fall 2017
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+90-897-678-44
+                    Yiran Wang & Vivian (Ni) Zhang 
                 </div>
 
             </div>
         </div>
     </header>
     <!-- HEADER END-->
-    <div class="navbar navbar-inverse set-radius-zero">
+     <div class="navbar navbar-inverse set-radius-zero">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -45,14 +45,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">
-
-                    <img src="assets/img/logo.png" />
-                </a>
+                <div class="navbar-title">
+                <h1>Movie DB Query System</h1>
+                   <!-- <img src="assets/img/logo.png" />-->
+                </div>
 
             </div>
 
-            <div class="left-div">
+          <!--  <div class="left-div">
                 <div class="user-settings-wrapper">
                     <ul class="nav">
 
@@ -83,22 +83,21 @@
 
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        </div> 
     </div>
     <!-- LOGO HEADER END-->
-    <section class="menu-section">
+   <section class="menu-section">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a  href="index.html">Dashboard</a></li>
-                            <li><a class="menu-top-active" href="ui.html">UI Elements</a></li>
-                            <li><a href="table.html">Data Tables</a></li>
-                            <li><a href="forms.html">Forms</a></li>
-                             <li><a href="login.html">Login Page</a></li>
-                            <li><a href="blank.html">Blank Page</a></li>
+                            <li><a  href="index.php">Welcome</a></li>
+                            <li><a class="menu-top-active" href="add-content.php">Add Content</a></li>
+                            <li><a href="table.html">Browse</a></li>
+                       <!--     <li><a href="forms.html">Search</a></li>
+                            <li><a href="blank.html">Blank Page</a></li>-->
 
                         </ul>
                     </div>
@@ -112,70 +111,49 @@
         <div class="container">
              <div class="row">
                     <div class="col-md-12">
-                        <h1 class="page-head-line">UI Elements</h1>
+                        <h1 class="page-head-line">Add Entries</h1>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
+
                         <div class="panel panel-default">
                         <div class="panel-heading">
-                            Simple Progress Bars 
+                            Person 
                         </div>
-                       
                         <div class="panel-body">
-                       <div class="progress">
-  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-    <span class="sr-only">40% Complete (success)</span>
-  </div>
-</div>
-<div class="progress">
-  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-    <span class="sr-only">20% Complete</span>
-  </div>
-</div>
-<div class="progress">
-  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-    <span class="sr-only">60% Complete (warning)</span>
-  </div>
-</div>
-<div class="progress">
-  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-    <span class="sr-only">80% Complete</span>
-  </div>
-</div>
-                            </div>
-                            </div>
+                        
+                            <label>Enter Recipient Name : </label>
+                            <input type="text" class="form-control" />
+                            <label>Enter Subject :  </label>
+                            <input type="text" class="form-control" />
+                            <label>Enter Message : </label>
+                            <textarea rows="9" class="form-control"></textarea>
+                            <hr />
+                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB </a>&nbsp;
+                            <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-tags"></span>  Save To Drafts </a>
+                        </div> <!-- end of panel-body -->
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="panel panel-default">
                         <div class="panel-heading">
-                            Stripped Progress Bars 
+                            Movie
                         </div>
                        
                         <div class="panel-body">
-                       <div class="progress progress-striped">
-  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-    <span class="sr-only">40% Complete (success)</span>
-  </div>
-</div>
-<div class="progress progress-striped">
-  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-    <span class="sr-only">20% Complete</span>
-  </div>
-</div>
-<div class="progress progress-striped">
-  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-    <span class="sr-only">60% Complete (warning)</span>
-  </div>
-</div>
-<div class="progress progress-striped">
-  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-    <span class="sr-only">80% Complete</span>
-  </div>
-</div>
-                            </div>
-                            </div>
-                    </div>
+                       <label>Enter Recipient Name : </label>
+                            <input type="text" class="form-control" />
+                            <label>Enter Subject :  </label>
+                            <input type="text" class="form-control" />
+                            <label>Enter Message : </label>
+                            <textarea rows="9" class="form-control"></textarea>
+                            <hr />
+                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB </a>&nbsp;
+                            <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-tags"></span>  Save To Drafts </a>
+                    </div> <!-- end of panel-body -->
+                </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">

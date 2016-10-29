@@ -99,6 +99,13 @@ header {
     padding-top: 30px;
 }
 
+
+.navbar-title {
+    padding: 30px;
+    color: white
+}
+
+
 /* USER SETTINGS DIV */
 .user-settings-wrapper .nav > li > a {
     position: relative;

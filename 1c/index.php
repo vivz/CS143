@@ -8,7 +8,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Free Responsive Admin Theme - ZONTAL</title>
+    <title>CS 143 Project 1C</title>
     <!-- BOOTSTRAP CORE STYLE  -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FONT AWESOME ICONS  -->
@@ -27,9 +27,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <strong>Email: </strong>info@yourdomain.com
+                    CS143 Fall 2017
                     &nbsp;&nbsp;
-                    <strong>Support: </strong>+90-897-678-44
+                    Yiran Wang & Vivian (Ni) Zhang 
                 </div>
 
             </div>
@@ -44,14 +44,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">
-
-                    <img src="assets/img/logo.png" />
-                </a>
+                <div class="navbar-title">
+                <h1>Movie DB Query System</h1>
+                   <!-- <img src="assets/img/logo.png" />-->
+                </div>
 
             </div>
 
-            <div class="left-div">
+          <!--  <div class="left-div">
                 <div class="user-settings-wrapper">
                     <ul class="nav">
 
@@ -82,8 +82,8 @@
 
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        </div> 
     </div>
     <!-- LOGO HEADER END-->
     <section class="menu-section">
@@ -92,12 +92,11 @@
                 <div class="col-md-12">
                     <div class="navbar-collapse collapse ">
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a class="menu-top-active" href="index.html">Dashboard</a></li>
-                            <li><a href="ui.html">UI Elements</a></li>
-                            <li><a href="table.html">Data Tables</a></li>
-                            <li><a href="forms.html">Forms</a></li>
-                             <li><a href="login.html">Login Page</a></li>
-                            <li><a href="blank.html">Blank Page</a></li>
+                            <li><a class="menu-top-active" href="index.php">Welcome</a></li>
+                            <li><a href="add-content.php">Add Content</a></li>
+                            <li><a href="table.html">Browse</a></li>
+                       <!--     <li><a href="forms.html">Search</a></li>
+                            <li><a href="blank.html">Blank Page</a></li>-->
 
                         </ul>
                     </div>
