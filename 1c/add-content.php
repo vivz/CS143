@@ -122,16 +122,42 @@
                             Person 
                         </div>
                         <div class="panel-body">
-                        
-                            <label>Enter Recipient Name : </label>
-                            <input type="text" class="form-control" />
-                            <label>Enter Subject :  </label>
-                            <input type="text" class="form-control" />
-                            <label>Enter Message : </label>
-                            <textarea rows="9" class="form-control"></textarea>
-                            <hr />
+                        <form method = "GET" action="#">
+                            <div class = "radio">
+                                <label>
+                                    <input type="radio" name="identity" id="optionActor" value="Actor" checked />
+                                    This is an Actor
+                                </label>
+                                <label>
+                                    <input type="radio" name="identity" id="optionDirector" value="Director" checked />
+                                    This is a Director
+                                </label>
+                            </div>
+                            
+                            <label>First Name : </label>
+                                <input type="text" class="form-control" placeholder="Enter first name"  name="fname"/>
+                            <label>Last Name : </label>
+                                <input type="text" class="form-control" placeholder="Enter last name"  name="lname"/>
+                            
+                            <div class = "radio">
+                                <label>
+                                    <input type="radio" name="sex" id="optionFemale" value="Female" checked />
+                                    FEMALE
+                                </label>
+                                <label>
+                                    <input type="radio" name="sex" id="optionMale" value="Male" checked />
+                                    MALE
+                                </label>
+                            </div>
+
+                            <label>Date Of Birth : </label>
+                                <input type="text" class="form-control" placeholder="YYYY-MM-DD"  name="dob"/>
+                            <label>Date Of Death : </label>
+                                <input type="text" class="form-control" placeholder="Leave this blank if he/she still alives"  name="dod"/>
+
                             <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB </a>&nbsp;
                             <a href="#" class="btn btn-success"><span class="glyphicon glyphicon-tags"></span>  Save To Drafts </a>
+                        </form>
                         </div> <!-- end of panel-body -->
                         </div>
                     </div>
