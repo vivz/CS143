@@ -263,81 +263,81 @@
                                 <option value="surrendere" <?php echo (htmlspecialchars($_GET['rate'])=='surrendere')?'selected':''?>>surrendere</option>
                                 </select>
                             <label>Genre : </label>
-                            <div class = "radio">
+                            <div class = "checkbox">
                                 <label>
-                                    <input type="radio" name="genre" value="Action" <?php echo (htmlspecialchars($_GET['genre'])=='Action')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Action" />
                                     Action
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Adult" <?php echo (htmlspecialchars($_GET['genre'])=='Adult')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Adult" />
                                     Adult
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Adventure" <?php echo (htmlspecialchars($_GET['genre'])=='Adventure')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Adventure" />
                                     Adventure
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Animation" <?php echo (htmlspecialchars($_GET['genre'])=='Animation')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Animation" />
                                     Animation
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Comedy" <?php echo (htmlspecialchars($_GET['genre'])=='Comedy')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Comedy" />
                                     Comedy
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Crime" <?php echo (htmlspecialchars($_GET['genre'])=='Crime')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Crime" />
                                     Crime
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Documentary" <?php echo (htmlspecialchars($_GET['genre'])=='Documentary')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Documentary" />
                                     Documentary
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Drama" <?php echo (htmlspecialchars($_GET['genre'])=='Drama')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Drama" />
                                     Drama
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Family" <?php echo (htmlspecialchars($_GET['genre'])=='Family')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Family" />
                                     Family
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Fantasy" <?php echo (htmlspecialchars($_GET['genre'])=='Fantasy')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Fantasy" />
                                     Fantasy
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Horror" <?php echo (htmlspecialchars($_GET['genre'])=='Horror')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Horror" />
                                     Horror
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Musical" <?php echo (htmlspecialchars($_GET['genre'])=='Musical')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Musical" />
                                     Musical
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Mystery" <?php echo (htmlspecialchars($_GET['genre'])=='Mystery')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Mystery" />
                                     Mystery
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Romantic" <?php echo (htmlspecialchars($_GET['genre'])=='Romantic')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Romantic" />
                                     Romantic
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Sci-Fi" <?php echo (htmlspecialchars($_GET['genre'])=='Sci-Fi')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Sci-Fi" />
                                     Sci-Fi
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Short" <?php echo (htmlspecialchars($_GET['genre'])=='Short')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Short" />
                                     Short
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Thriller" <?php echo (htmlspecialchars($_GET['genre'])=='Thriller')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Thriller" />
                                     Thriller
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="War" <?php echo (htmlspecialchars($_GET['genre'])=='War')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="War" />
                                     War
                                 </label>
                                 <label>
-                                    <input type="radio" name="genre" value="Western" <?php echo (htmlspecialchars($_GET['genre'])=='Western')?'checked':''?> />
+                                    <input type="checkbox" name="genre[]" value="Western" />
                                     Western
                                 </label>
                             </div>
@@ -362,7 +362,10 @@
                             $dbYear=$_GET["year"];
                             $dbRating=$_GET["rate"];
                             $dbGenre=$_GET["genre"];
-
+                            $genre="";
+                            foreach ($dbGenre as $val){
+                                $genre.=$val." ";
+                            }
                             //Query maxID to determine the new ID
                             $maxIDQuery="SELECT id FROM MaxMovieID";
                             $currentMaxID=$db_connection->query($maxIDQuery);
@@ -371,6 +374,7 @@
                             }
                             $maxID = $currentMaxID->fetch_array(MYSQLI_NUM);
                             $newID = $maxID[0]+ 1;
+
                         
                             if($dbMovieTitle=="" && $dbCompany=="" && $dbYear=="" && $dbRating=="" && $dbGenre==""){} //Everything is empty, do nothing
                             else if($dbMovieTitle==""){
@@ -410,7 +414,7 @@
                                     die('Unable to execute UPDATE [' . $db_connection->error .']');
                                 }
                                 //Update MovieGenre Table
-                                $addMovieGenre="INSERT INTO MovieGenre VALUES('$newID', '$dbGenre')";
+                                $addMovieGenre = "INSERT INTO MovieGenre VALUES ('$newID', '$genre')";
                                 if(!$db_connection->query($addMovieGenre)){
                                     $dropAddedInfo="DELETE FROM Movie WHERE id=$newID";
                                     $changeMaxID="UPDATE MaxMovieID SET id=$maxID[0] WHERE id=$newID";
