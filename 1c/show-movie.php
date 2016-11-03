@@ -261,7 +261,10 @@
                         ?>
                         </div> <!--end of info row-->
 
-
+                        <?php 
+                            $reviewQuery = "SELECT * FROM Review WHERE mid=$id";
+                            $rr = $db_connection->query($reviewQuery); 
+                        ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <h1 class="page-head-line">Reviews</h1>
@@ -273,34 +276,30 @@
                             <div class="col-md-12">
                                 <div class="notice-board">
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                                    <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block">
+                            <div class="panel-heading" align="center">
+                                    <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block" style="width: 50%;">
                                          <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
                                     </a>
                             </div>
-                            <div class="panel-body">
-                                <ul>
-                                   
-                                     <li>
-                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                        <b> Vivian</b> 
-                                        <div class="pull-right"><label class="label label-danger "> 
-                                            2016-11-03 13:24:19 
-                                        </label></div>
-                                        <br>
-                                        <p>this movie is great!</p>
-                                    </li>
-                                    <li>
-                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                        <b> Yiran </b> 
-                                        <div class="pull-right"><label class="label label-danger "> 
-                                            2016-11-03 13:24:19 
-                                        </label></div>
-                                        <br>
-                                        <p>this movie is okay!</p>
-                                    </li>
-                                </ul>
-                            </div>
+                            <?php 
+                                if($rr!=false){
+                            ?>
+                                    <div class="panel-body">
+                                        <ul>
+                                            <?php while($reviews=$rr->fetch_array()){ ?>
+                                             <li>
+                                                <span class="glyphicon glyphicon-user text-dangeer" ></span> 
+                                                <b><?php echo $review['name']?></b> 
+                                                <div class="pull-right"><label class="label label-danger "> 
+                                                    <?php echo $review['time']?> 
+                                                </label></div>
+                                                <br>
+                                                <p><?php echo $review['comment']?></p>
+                                            </li>
+                                            <?php } //end of while?>
+                                        </ul>
+                                    </div>
+                           <?php } //end of if rr!=false?> 
                         </div>
                     </div>
                             </div>
