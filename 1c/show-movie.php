@@ -286,15 +286,15 @@
                             ?>
                                     <div class="panel-body">
                                         <ul>
-                                            <?php while($reviews=$rr->fetch_array()){ ?>
+                                            <?php while($review = $rr->fetch_array()){ ?>
                                              <li>
                                                 <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                                <b><?php echo $review['name']?></b> 
+                                                <b><?php echo $review['name'] ?></b> rated <?php echo $review['rating'] ?>/5
                                                 <div class="pull-right"><label class="label label-danger "> 
-                                                    <?php echo $review['time']?> 
+                                                    <?php echo $review['time'] ?> 
                                                 </label></div>
                                                 <br>
-                                                <p><?php echo $review['comment']?></p>
+                                                <p><?php echo $review['comment'] ?></p>
                                             </li>
                                             <?php } //end of while?>
                                         </ul>
