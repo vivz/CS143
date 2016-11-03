@@ -100,7 +100,7 @@
                     //establish connection
                     $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                     if($db_connection->connect_errno > 0){
-                        die('Unable to connect to database [' . $db->connect_error . ']');
+                        die('Unable to connect to database [' . $db_connection->connect_error . ']');
                     }
 
                     $keyword=$_GET["search-term"];

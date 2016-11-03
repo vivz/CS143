@@ -108,87 +108,234 @@
 
             <?php 
                 $id=$_GET["identifier"];
-                echo $id;
+                if($id!=""){
+                    $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                    if($db_connection->connect_errno > 0){
+                        die('Unable to connect to database [' . $db_connection->connect_error . ']');
+                    }
+                    $movieQuery = "SELECT * FROM Movie WHERE id=$id";
+                    $rv = $db_connection->query($movieQuery);
+                    if($rv === FALSE){
+                        die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
+                    }
+                    else{  ?>
+                         <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="page-head-line">Moive Information</h1>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                         <div class="col-md-6">
+                            <div class="notice-board">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        About
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul >
+                                             <li>
+                                             <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
+                                                   <div class="pull-right">  Lorem ipsum dolor sit </div>
+                                             </li>
+                                             <li>
+                                             <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Producer</b>
+                                                  <div class="pull-right"> Lorem ipsum </div>
+                                             </li>
+                                             <li>
+                                             <span class="glyphicon glyphicon-comment text-danger" ></span> <b> MPAA Rating </b>
+                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                            </li>
+                                            <li>
+                                             <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Director</b>
+                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                            </li>
+                                            <li>
+                                             <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
+                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                            </li>
+                                            <li>
+                                             <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
+                                                  <div class="pull-right">5.00/5 based on 1 people's reviews</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer" align="center"> <a href="give-review.php?id=<?php echo $id?>">Leave your review as well</a> </div>
+                                </div>
+                            </div> <!--end of notice board-->
+
+                        </div>
+                        <div class="col-md-6">
+                             <!--    Hover Rows  -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Actors in this movie 
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Role</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Mark</td>
+                                                    <td>Otto</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End  Hover Rows  -->
+                        </div>
+                    </div>
+
+              <?php }//end of if $rv!=false
+                }//end of if($id!="");
             ?>
-
+    <!--search-->
             <div class="row">
-                    <div class="col-md-12">
-                        <h1 class="page-head-line">Moive Information</h1>
-                    </div>
-                </div>
-               
-                <div class="row">
-                 <div class="col-md-6">
-                    <div class="notice-board">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                About
-                            </div>
-                            <div class="panel-body">
-                                <ul >
-                                     <li>
-                                     <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
-                                           <div class="pull-right">  Lorem ipsum dolor sit </div>
-                                     </li>
-                                     <li>
-                                     <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Producer</b>
-                                          <div class="pull-right"> Lorem ipsum </div>
-                                     </li>
-                                     <li>
-                                     <span class="glyphicon glyphicon-comment text-danger" ></span> <b> MPAA Rating </b>
-                                          <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
-                                    </li>
-                                    <li>
-                                     <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Director</b>
-                                          <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
-                                    </li>
-                                    <li>
-                                     <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
-                                          <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
-                                    </li>
-                                    <li>
-                                     <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
-                                          <div class="pull-right">5.00/5 based on 1 people's reviews</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="panel-footer" align="center"> <a href="#">Leave your review as well</a> </div>
-                        </div>
-                    </div> <!--end of notice board-->
-
-                </div>
-                <div class="col-md-6">
-                     <!--    Hover Rows  -->
+                <div class="col-md-6 col-md-offset-3 " >
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Actors in this movie 
-                        </div>
                         <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Role</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <form method = "GET" action="show-movie.php">
+                            <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/ name="search-term" value="<?php echo $_GET['search-term'];?>"/>
+                            <input type="submit" value="Search" class="btn btn-primary search-box">
+                        </form>
                         </div>
                     </div>
-                    <!-- End  Hover Rows  -->
                 </div>
-            </div>
+            </div> <!--end of search input row -->
+    <!--search result-->
+            <div class="row">
+                <?php
+                    //establish connection
+                    $keyword=$_GET["search-term"];
+                    echo $keyword;
+                    //if no input, do nothing 
+                    if($keyword==""){}
+                    else{
+                        $db_connection2 = new mysqli("localhost", "cs143", "", "CS143");
+                        if($db_connection2->connect_errno > 0){
+                            die('Unable to connect to database [' . $db_connection2->connect_error . ']');
+                        }
+                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
+                        $movieQuery = "SELECT id, title, year FROM Movie WHERE title like '%$keyword%'";
+                        $ra = $db_connection->query($actorQuery);
+                        $rv = $db_connection->query($movieQuery);
+                        if($ra === FALSE){
+                            die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
+                        }
+                        else{?>
+                            <div class="col-md-6">
+                             <!--    Hover Rows  -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Related Actors
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead >
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Date of Birth</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                        <?php
+                            $i=1;
+                            while($row = $ra->fetch_array()){
+                                //foreach ($row as $val) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $i; $i=$i+1; ?>
+                                        </td>
+                                        <td>
+                                            <a href="show-actor.php?identifier=<?php echo $row["id"]?>">
+                                                <?php echo $row["first"]."  ".$row["last"]; ?>
+                                            </a>
+                                        </td>
+                                        <td> 
+                                            <a href="show-actor.php?identifier=<?php echo $row["id"]?>">
+                                                <?php echo $row["dob"]; ?>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            <?php } ?> <!--end of while-->
+                                        </tbody>
+                                        </table>
+                                </div>
+                            </div>
+                        </div><!-- End  Hover Rows  -->
+                    </div>
+                    <?php } //end of if(ra==true)
+                        if($rv === FALSE){
+                            die('Unable to execute SELECT from Movie [' . $db_connection->error .']');
+                        }
+                        else{ ?>
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Related Movies
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Title</th>
+                                                        <th>Year</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                <?php 
+                                                    $i=1;
+                                                    while($row = $rv->fetch_array()){
+                                                        //foreach ($row as $val) {
+                                                        ?>
+                                                            <tr>
+                                                                <td>
+                                                                    <?php echo $i; $i=$i+1; ?>
+                                                                </td>
+                                                                <td> <a href="show-movie.php?identifier=<?php echo $row["id"]?>">
+                                                                        <?php echo $row["title"]; ?>
+                                                                    </a>
+                                                                </td>
+                                                                <td> 
+                                                                    <a href="show-movie.php?identifier=<?php echo $row["id"]?>">
+                                                                        <?php echo $row["year"]; ?>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                <?php } ?> <!--end of while-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <?php
+                        }//end of if(rv==true)
 
-        </div>
+                        mysql_close($db_connection2);
+                    }//end of if(keyword!="")
+                ?>
+                                    
+            </div>
+           
+
+
+        </div> <!-- end of container-->
     </div>
     <!-- CONTENT-WRAPPER SECTION END-->
     <footer>
