@@ -95,7 +95,7 @@
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a  href="index.php">Welcome</a></li>
                             <li><a class="menu-top-active" href="add-content.php">Add Content</a></li>
-                            <li><a href="browse.php">Browse</a></li>
+                            <li><a href="show-movie.php">Browse</a></li>
                        <!--     <li><a href="forms.html">Search</a></li>
                             <li><a href="blank.html">Blank Page</a></li>-->
 

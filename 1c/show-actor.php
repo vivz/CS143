@@ -113,15 +113,17 @@
                 $id=$_GET["identifier"];
                 $keyword=$_GET["search-term"];
                 if($id!=""){
-                    $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
-                    $rvi = $db_connection->query($movieInfoQuery);
-                    if($rvi === FALSE){
+                    $actorInfoQuery = "SELECT * FROM Actor WHERE id=$id";
+                    $rai = $db_connection->query($actorInfoQuery);
+                    if($rai === FALSE){
                         die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
                     }
-                    else{ ?>
+                    else{ 
+                        $actorInfoRow = $rai->fetch_array();
+                        ?>
                          <div class="row">
                             <div class="col-md-12">
-                                <h1 class="page-head-line">Moive Information</h1>
+                                <h1 class="page-head-line">Actor Information</h1>
                             </div>
                         </div>
 
@@ -136,31 +138,22 @@
                                         <ul >
                                              <li>
                                              <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
-                                                   <div class="pull-right">  Lorem ipsum dolor sit </div>
+                                                   <div class="pull-right">  <?php echo $actorInfoRow["first"].' '.$actorInfoRow["last"] ?></div>
                                              </li>
                                              <li>
-                                             <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Producer</b>
-                                                  <div class="pull-right"> Lorem ipsum </div>
+                                             <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Sex</b>
+                                                  <div class="pull-right"> <?php echo $actorInfoRow["sex"]?> </div>
                                              </li>
                                              <li>
-                                             <span class="glyphicon glyphicon-comment text-danger" ></span> <b> MPAA Rating </b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                             <span class="glyphicon glyphicon-comment text-danger" ></span> <b> Date of Birth </b>
+                                                  <div class="pull-right"> <?php echo $actorInfoRow["dob"]?> </div>
                                             </li>
                                             <li>
-                                             <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Director</b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
-                                            </li>
-                                            <li>
-                                             <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
-                                            </li>
-                                            <li>
-                                             <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
-                                                  <div class="pull-right">5.00/5 based on 1 people's reviews</div>
+                                             <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Date of Death</b>
+                                                  <div class="pull-right"> <?php echo ($actorInfoRow["dod"]=="")?'Still Alive':$actorInfoRow["dod"] ?></div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="panel-footer" align="center"> <a href="give-review.php?id=<?php echo $id?>">Leave your review as well</a> </div>
                                 </div>
                             </div> <!--end of notice board-->
 
@@ -168,7 +161,7 @@
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Actors in this movie 
+                                    Movies and Roles
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
@@ -207,7 +200,7 @@
                 <div class="col-md-6 col-md-offset-3 " >
                     <div class="panel panel-default">
                         <div class="panel-body">
-                        <form method = "GET" action="show-movie.php">
+                        <form method = "GET" action="show-actor.php">
                             <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/ name="search-term" value="<?php echo $_GET['search-term'];?>"/>
                             <input type="submit" value="Search" class="btn btn-primary search-box">
                         </form>
