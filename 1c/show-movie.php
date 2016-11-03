@@ -274,35 +274,41 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <div class="notice-board">
-                        <div class="panel panel-default">
+                            <div class="notice-board">
+                            <div class="panel panel-default">
                             <div class="panel-heading" align="center">
-                                    <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block" style="width: 50%;">
-                                         <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
-                                    </a>
+                                <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block" style="width: 50%;">
+                                     <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
+                                </a>
                             </div>
+
+                            <div class="panel-body">
                             <?php 
-                                if($rr!=false){
-                            ?>
-                                    <div class="panel-body">
-                                        <ul>
-                                            <?php while($review = $rr->fetch_array()){ ?>
-                                             <li>
-                                                <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                                <b><?php echo $review['name'] ?></b> rated <?php echo $review['rating'] ?>/5
-                                                <div class="pull-right"><label class="label label-danger "> 
-                                                    <?php echo $review['time'] ?> 
-                                                </label></div>
-                                                <br>
-                                                <p><?php echo $review['comment'] ?></p>
-                                            </li>
-                                            <?php } //end of while?>
-                                        </ul>
-                                    </div>
-                           <?php } //end of if rr!=false?> 
+                                if($rr->num_rows>0){
+                            ?>          
+                                    <ul>
+                                        <?php while($review = $rr->fetch_array()){ ?>
+                                         <li>
+                                            <span class="glyphicon glyphicon-user text-dangeer" ></span> 
+                                            <b><?php echo $review['name'] ?></b> rated <?php echo $review['rating'] ?>/5
+                                            <div class="pull-right"><label class="label label-danger "> 
+                                                <?php echo $review['time'] ?> 
+                                            </label></div>
+                                            <br>
+                                            <p><?php echo $review['comment'] ?></p>
+                                        </li>
+                                        <?php } //end of while?>
+                                    </ul>
+                                    
+                           <?php }
+                                else{
+                                    echo "No reviews submitted";
+                                }
+                            //end of if rr!=false?> 
                         </div>
-                    </div>
-                            </div>
+                        </div>
+                        </div>
+                        </div>
                                 <!--
                                     <div class="panel-heading">
                                         <b>
