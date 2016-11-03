@@ -160,7 +160,7 @@
                                                     $didQuery = "SELECT did FROM MovieDirector WHERE mid=$id";
                                                     $rdid = $db_connection->query($didQuery);
                                                     if($rdid == FALSE){
-                                                         echo $didQuery;
+                                                          echo "N/A";
                                                     }
                                                     else{
                                                         $didRow = $rdid->fetch_array();
@@ -176,14 +176,24 @@
                                                             echo "N/A";
                                                         }
                                                     }
-                                                    
-                                                    
                                                 ?>
                                                   </div>
                                             </li>
                                             <li>
-                                             <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                                <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
+                                                <div class="pull-right"> 
+                                                  <!--show generes here-->
+                                                <?php 
+                                                    $genreQuery = "SELECT genre FROM MovieGenre WHERE mid=$id";
+                                                    $rge = $db_connection->query($genreQuery);
+                                                    if($rge == FALSE){
+                                                          echo "N/A";
+                                                    }else{
+                                                        $geRow = $rge->fetch_array();
+                                                        echo $geRow['genre'];
+                                                    }
+                                                ?>
+                                                </div>
                                             </li>
                                             <li>
                                              <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
