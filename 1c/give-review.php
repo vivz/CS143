@@ -95,11 +95,12 @@
                                     if($rs==FALSE){
                                         die('Unable to fetch data [' . $db_connection->error .']');
                                     }
-                                    $dbArray=$rs->fetch_array();
+                                    $movieTitle=$rs->fetch_array()["title"];
                                 ?>
                                 <!-- END OF PHP -->
-                                <label>Movie Title: <?php echo $dbArray[0]; ?></label>
+                                <label>Movie Title: <?php echo $movieTitle; ?></label>
                                 <hr />
+                                <input type="hidden" name="id" value="<?php echo $mid;?>"/>
                                 <label>Your Name :  </label>
                                     <input type="text" class="form-control" name="userName" placeholder="Please enter your name." value="<?php echo $_GET['userName'];?>"/>
                                 <label>Rating :  </label>
@@ -112,13 +113,47 @@
                                 </select>
                                 <label>Comments: </label>
                                     <input type="text" class="form-control" name="comments" placeholder="Please enter your comments." value="<?php echo $_GET['comments'];?>"/>
-
+                                <hr />
+                                <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add your review! </button>
                             </form>
                         </div>
+
+                        <!-- PHP to Insert review -->
+                        <?php
+                            $dbUserName=$_GET["userName"];
+                            $dbRating=$_GET["rate"];
+                            $dbComment=$_GET["comments"];
+                            
+                            if($dbUserName==""&&$dbRating==""&&$dbComment==""){}
+                            else if($dbRating==""){
+                                echo "Please enter your rating.";
+                            }
+                            else{
+                                $date=new DateTime();
+                                $dbTimeStamp=date('Y-m-d H:i:s', $date->getTimestamp());
+                                if($dbUserName==""&&$dbComment==""){
+                                    $dbQuery="INSERT INTO Review VALUES(NULL, '$dbTimeStamp', '$mid', '$dbRating', NULL)";
+                                }
+                                else if($dbUserName=="") {
+                                    $dbQuery="INSERT INTO Review VALUES(NULL, '$dbTimeStamp', '$mid', '$dbRating', '$dbComment')";
+                                }
+                                else if($dbComment=="") {
+                                    $dbQuery="INSERT INTO Review VALUES('$dbUserName', '$dbTimeStamp', '$mid', '$dbRating', NULL)";
+                                }
+                                else{
+                                    $dbQuery="INSERT INTO Review VALUES('$dbUserName', '$dbTimeStamp', '$mid', '$dbRating', '$dbComment')";
+                                }
+                                if(!$db_connection->query($dbQuery)){
+                                    die('Unable to insert to Review [' . $db_connection->error . ']');
+                                }
+                                echo "Your review has been successfully added!";
+                            }
+                            mysql_close($db_connection);
+                        ?>
+                        <!-- END OF PHP -->
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <!-- CONTENT-WRAPPER SECTION END-->
