@@ -155,7 +155,7 @@
                             <label>Date Of Death : </label>
                                 <input type="text" class="form-control" placeholder="Leave this blank if he/she still alives"  name="dod" value="<?php echo htmlspecialchars($_GET['dod']);?>"/>
                                 <hr />
-                            <button type="submit" class="btn btn-warning" value="addPerson"><span class="glyphicon glyphicon-envelope"></span> Add to DB
+                            <button type="submit" class="btn btn-warning" value="addPerson"><span class="glyphicon glyphicon-envelope"></span> Add to DB</button>
                         </form>
                         </div> <!-- end of panel-body -->
                         <!-- PHP for Add Person -->
@@ -345,7 +345,7 @@
                             <label>Enter Message : </label>
                             <textarea rows="9" class="form-control"></textarea> -->
                             <hr />
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB </button>
                     </form>
                     </div> 
                     <!-- end of panel-body -->
@@ -442,31 +442,65 @@
                             Movie - Actor Relation 
                         </div>
                         <div class="panel-body">
-                        <form method = "GET" action="#">
-                            <label>Movie: </label>
-                            <select class="form-control" name="mid">
-                                <?=$movie?>
-                            </select>
-                            <hr />
-                            <label>Actor: </label>
-                            <select class="form-control" name="aid">
-                                <?=$actor?>
-                            </select>
-                            <hr />
-                            <label>Role :  </label>
-                                <input type="text" class="form-control" name="role" placeholder="The role of this actor in this movie" value="<?php echo $_GET['role'];?>"/>
-                            <hr />
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!
-                        </form>
-                        </div> 
-                        <!-- end of panel-body -->
-                        <!-- PHP to Add Movie-Director Relation -->
+                        <form method = "GET" action="add-content.php">
+
+                        <!-- PHP to retrieve data from database -->
                         <?php
                             //establish connection
                             $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                             if($db_connection->connect_errno > 0){
                                 die('Unable to connect to database [' . $db->connect_error . ']');
                             }
+
+                            $movieDB=$db_connection->query("SELECT id, title, year FROM Movie ORDER BY title ASC");
+                            if($movieDB==FALSE){
+                                die('Unable to get data from Movie database [' . $db->connect_error . ']');
+                            }
+                            $movie="";
+                            while ($row=$movieDB->fetch_array()){
+                                $id=$row["id"];
+                                $title=$row["title"];
+                                $year=$row["year"];
+                                $movie.="<option value=\"$id\">".$title." (".$year.")</option>";
+                            }
+
+                            $actorDB=$db_connection->query("SELECT id, first, last, dob FROM Actor ORDER BY first ASC");
+                            if($actorDB==FALSE){
+                                die('Unable to get data from Actor database [' . $db->connect_error . ']');
+                            }
+                            $actor="";
+                            while ($row=$actorDB->fetch_array()){
+                                $id=$row["id"];
+                                $first=$row["first"];
+                                $last=$row["last"];
+                                $dob=$row["dob"];
+                                $actor.="<option value=\"$id\">".$first." ".$last." (".$dob.")</option>";
+                            }
+                            //Free results
+                            mysqli_free_result($movieDB);
+                            mysqli_free_result($actorDB);
+                        ?>
+                        <!-- END of PHP -->
+                            
+                        <label>Movie: </label>
+                            <select class="form-control" name="mid">
+                                <?=$movie?>
+                            </select>
+                            <hr />
+                        <label>Actor: </label>
+                            <select class="form-control" name="aid">
+                                <?=$actor?>
+                            </select>
+                            <hr />
+                        <label>Role :  </label>
+                                <input type="text" class="form-control" name="role" placeholder="The role of this actor in this movie" value="<?php echo $_GET['role'];?>"/>
+                            <hr />
+                        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this! </button>
+                        </form>
+                        </div> 
+                        <!-- end of panel-body -->
+                        <!-- PHP to Add Movie-Director Relation -->
+                        <?php
 
                             $dbRole=$_GET["role"];
                             $dbMovie=$_GET["mid"];
@@ -483,9 +517,16 @@
                             else if($dbRole==""){
                                 echo "Please enter the role of this actor in this movie.";
                             }
-
-
+                            else{
+                                $dbQuery="INSERT INTO MovieActor VALUES('$dbMovie','$dbActor','$dbRole')";
+                                if(!$db_connection->query($dbQuery)){
+                                    die('Unable to insert into MovieActor Table [' . $db->connect_error . ']');
+                                }
+                                echo "Successfully added to MovieActor Table!";
+                            }
+                            mysql_close($db_connection);
                         ?>
+                        <!-- END OF PHP -->
                         </div>
                     </div>
 
@@ -495,9 +536,41 @@
                             Movie - Director Relation 
                         </div>
                         <div class="panel-body">
-                        <form method = "GET" action="#">
+                        <form method = "GET" action="add-content.php">
+                            <!-- PHP to get Director Info-->
+                            <?php
+                                $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                                if($db_connection->connect_errno > 0){
+                                    die('Unable to connect to database [' . $db->connect_error . ']');
+                                }
+
+                                $directorDB=$db_connection->query("SELECT id, first, last, dob FROM Director ORDER BY first ASC");
+                                if($movieDB==FALSE){
+                                    die('Unable to get data from Director database [' . $db->connect_error . ']');
+                                }
+                                $director="";
+                                while ($row=$directorDB->fetch_array()){
+                                    $id=$row["id"];
+                                    $first=$row["first"];
+                                    $last=$row["last"];
+                                    $dob=$row["dob"];
+                                    $director.="<option value=\"$id\">".$first." ".$last." (".$dob.")</option>";
+                                }
+                                //free result
+                                mysqli_free_result($directorDB);
+                            ?>
+                            <!-- END OF PHP -->
+                            <label>Movie: </label>
+                                <select class="form-control" name="mmid">
+                                    <?=$movie?>
+                                </select>
                             <hr />
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!
+                            <label>Director: </label>
+                                <select class="form-control" name="did">
+                                    <?=$director?>
+                                </select>
+                            <hr />
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!</button>
                         </form>
                         </div> 
                         <!-- end of panel-body -->
@@ -508,6 +581,24 @@
                             if($db_connection->connect_errno > 0){
                                 die('Unable to connect to database [' . $db->connect_error . ']');
                             }
+                            $dbMovie=$_GET["mmid"];
+                            $dbDirector=$_GET["did"];
+
+                            if($dbMovie==""&&$dbDirector==""){}
+                            else if ($dbMovie=="") {
+                                echo "Please select a movie from the list.";
+                            }
+                            else if ($dbDirector=="") {
+                                echo "Please select a director from the list.";
+                            }
+                            else{
+                                $dbQuery="INSERT INTO MovieDirector VALUES('$dbMovie','$dbDirector')";
+                                if(!$db_connection->query($dbQuery)){
+                                    die('Unable to insert into MovieDirector Table [' . $db->connect_error . ']');
+                                }
+                                echo "Successfully added to MovieDirector Table!";
+                            }
+                            mysql_close($db_connection);
                         ?>
 
                         </div>
