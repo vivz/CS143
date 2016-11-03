@@ -202,10 +202,6 @@
                             }
                         
                             else{
-                                //escape special string to avoid failure
-                                $dbLName = mysqli_real_escape_string($dbLName);
-                                $dbFName = mysqli_real_escape_string($dbFName);
-        
                                 if($dbPersonType=="Actor"){
                                     if($getDOD==""){
                                         $dbQuery = "INSERT INTO Actor VALUES('$newID', '$dbLName', '$dbFName', '$dbSex', '$getDOB', NULL)";
@@ -225,11 +221,11 @@
                                 }
                                 //Execute the query
                                 if(!$db_connection->query($dbQuery)){
-                                    die('Unable to execute INSERT [' . mysqli_error() .']');
+                                    die('Unable to execute INSERT [' . $db_connection->error .']');
                                 }
                                 //Update new Max ID after successfully executing query
-                                if (!$db_connection->query("UPDATE MaxPersonID SET id=$newID WHERE id=$maxID")){
-                                    die('Unable to execute UPDATE [' . mysqli_error() .']');
+                                if (!$db_connection->query("UPDATE MaxPersonID SET id=$newID WHERE id=$maxID[0]")){
+                                    die('Unable to execute UPDATE [' . $db_connection->error .']');
                                 }
                             //present a success message`
                                 echo "New $dbPersonType has been added! $dbPersonType id=$newID.";
@@ -260,12 +256,12 @@
                                 <input type="text" class="form-control" name="year" placeholder="The year of this movie" value="<?php echo $_GET['year'];?>"/>
                             <label>MPAA Rating :  </label>
                                 <select class="form-control" name="rate">
-                                <option value="G">G</option>
-                                <option value="NC-17">NC-17</option>
-                                <option value="PG">PG</option>
-                                <option value="PG-13">PG-13</option>
-                                <option value="R">R</option>
-                                <option value=NULL>N/A</option>
+                                <option value="G" <?php echo (htmlspecialchars($_GET['rate'])=='G')?'selected':''?>>G</option>
+                                <option value="NC-17" <?php echo (htmlspecialchars($_GET['rate'])=='NC-17')?'selected':''?>>NC-17</option>
+                                <option value="PG" <?php echo (htmlspecialchars($_GET['rate'])=='PG')?'selected':''?>>PG</option>
+                                <option value="PG-13" <?php echo (htmlspecialchars($_GET['rate'])=='PG-13')?'selected':''?>>PG-13</option>
+                                <option value="R" <?php echo (htmlspecialchars($_GET['rate'])=='R')?'selected':''?>>R</option>
+                                <option value="surrendere" <?php echo (htmlspecialchars($_GET['rate'])=='surrendere')?'selected':''?>>surrendere</option>
                                 </select>
                             <label>Genre : </label>
                             <div class = "radio">
@@ -362,11 +358,11 @@
                                 die('Unable to connect to database [' . $db->connect_error . ']');
                             }
                             //get the user's input
-                            $dbMovieTitle=trim($_GET["title"]);
-                            $dbCompany=trim($_GET["company"]);
-                            $dbYear=trim($_GET["year"]);
-                            $dbRating=trim($_GET["rate"]);
-                            $dbGenre=trim($_GET["genre"]);
+                            $dbMovieTitle=$_GET["title"];
+                            $dbCompany=$_GET["company"];
+                            $dbYear=$_GET["year"];
+                            $dbRating=$_GET["rate"];
+                            $dbGenre=$_GET["genre"];
 
                             //Query maxID to determine the new ID
                             $maxIDQuery="SELECT id FROM MaxMovieID";
@@ -384,7 +380,7 @@
                             else if($dbCompany==""){
                                 echo "Please enter the company for this movie!";
                             }
-                            else if(preg_match('/[^A-Za-z\s\'-]/', $dbMovieTitle) || preg_match('/[^A-Za-z\s\'-]/', $dbCompany)){
+                            else if(preg_match('/[^A-Za-z0-9\s\'-.]/', $dbMovieTitle) || preg_match('/[^A-Za-z0-9\s\'-.]/', $dbCompany)){
                                 echo "Invalid name input! Only letters, - ' allowed";
                             }
                             else if($dbGenre==""){
@@ -393,27 +389,38 @@
                         
                             else{
                                 //escape special string to avoid failure
-                                $dbMovieTitle = mysqli_real_escape_string($dbMovieTitle);
-                                $dbCompany = mysqli_real_escape_string($dbCompany);
+                                //echo $dbMovieTitle;
+                                //$dbMovieTitle = mysqli_real_escape_string($dbMovieTitle);
+                                //$dbCompany = mysqli_real_escape_string($dbCompany);
         
                                 if($dbRating==""){
                                     $dbQuery = "INSERT INTO Movie VALUES('$newID', '$dbMovieTitle', '$dbYear', NULL, '$dbCompany')";
                                 }
-                                //Director
                                 else{
-                                    $dbRating=mysqli_real_escape_string($dbRating);
+                                    //$dbRating=mysqli_real_escape_string($dbRating);
                                     $dbQuery = "INSERT INTO Movie VALUES('$newID', '$dbMovieTitle', '$dbYear', '$dbRating', '$dbCompany')";
                                 }
                                 //Execute the query
                                 if(!$db_connection->query($dbQuery)){
-                                    die('Unable to execute INSERT [' . mysqli_error() .']');
+                                    die('Unable to execute INSERT [' . $db_connection->error .']');
                                 }
                                 //Update new Max ID after successfully executing query
-                                if (!$db_connection->query("UPDATE MaxMovieID SET id=$newID WHERE id=$maxID")){
-                                    die('Unable to execute UPDATE [' . mysqli_error() .']');
+                                if (!$db_connection->query("UPDATE MaxMovieID SET id=$newID WHERE id=$maxID[0]")){
+                                    $dropAddedInfo="DELETE FROM Movie WHERE id=$newID";
+                                    $db_connection->query($dropAddedInfo);
+                                    die('Unable to execute UPDATE [' . $db_connection->error .']');
+                                }
+                                //Update MovieGenre Table
+                                $addMovieGenre="INSERT INTO MovieGenre VALUES('$newID', '$dbGenre')";
+                                if(!$db_connection->query($addMovieGenre)){
+                                    $dropAddedInfo="DELETE FROM Movie WHERE id=$newID";
+                                    $changeMaxID="UPDATE MaxMovieID SET id=$maxID[0] WHERE id=$newID";
+                                    $db_connection->query($dropAddedInfo);
+                                    $db_connection->query($changeMaxID);
+                                    die('Unable to execute INSERT MovieGenre [' . $db_connection->error .']');
                                 }
                             //present a success message`
-                                echo "New $dbPersonType has been added! $dbPersonType id=$newID.";
+                                echo "New Movie $dbMovieTitle has been added! Movie id=$newID.";
                             }
                             //Free result set
                             mysqli_free_result($currentMaxID);
@@ -437,12 +444,49 @@
                         </div>
                         <div class="panel-body">
                         <form method = "GET" action="#">
-                            <label>Role :  </label>
-                                <input type="text" class="form-control" />
+                            <label>Movie: </label>
+                            <select class="form-control" name="mid">
+                                <?=$movie?>
+                            </select>
                             <hr />
-                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Check DB </a>&nbsp;
+                            <label>Actor: </label>
+                            <select class="form-control" name="aid">
+                                <?=$actor?>
+                            </select>
+                            <hr />
+                            <label>Role :  </label>
+                                <input type="text" class="form-control" name="role" placeholder="The role of this actor in this movie" value="<?php echo $_GET['role'];?>"/>
+                            <hr />
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!
                         </form>
-                        </div> <!-- end of panel-body -->
+                        </div> 
+                        <!-- end of panel-body -->
+                        <!-- PHP to Add Movie-Director Relation -->
+                        <?php
+                            //establish connection
+                            $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                            if($db_connection->connect_errno > 0){
+                                die('Unable to connect to database [' . $db->connect_error . ']');
+                            }
+
+                            $dbRole=$_GET["role"];
+                            $dbMovie=$_GET["mid"];
+                            $dbActor=$_GET["aid"];
+
+                            if($dbMovie=="" && $dbActor=="" && $dbRole==""){
+                            }
+                            else if($dbMovie==""){
+                                echo "Please select a movie.";
+                            }
+                            else if($dbActor==""){
+                                echo "Please select an actor.";
+                            }
+                            else if($dbRole==""){
+                                echo "Please enter the role of this actor in this movie.";
+                            }
+
+
+                        ?>
                         </div>
                     </div>
 
@@ -454,9 +498,19 @@
                         <div class="panel-body">
                         <form method = "GET" action="#">
                             <hr />
-                            <a href="#" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Check DB </a>&nbsp;
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!
                         </form>
-                        </div> <!-- end of panel-body -->
+                        </div> 
+                        <!-- end of panel-body -->
+                        <!-- PHP to Add Movie-Director Relation -->
+                        <?php
+                            //establish connection
+                            $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                            if($db_connection->connect_errno > 0){
+                                die('Unable to connect to database [' . $db->connect_error . ']');
+                            }
+                        ?>
+
                         </div>
                     </div>
 
