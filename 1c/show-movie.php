@@ -139,7 +139,7 @@
                                         About
                                     </div>
                                     <div class="panel-body">
-                                        <ul >
+                                        <ul>
                                              <li>
                                              <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
                                                    <div class="pull-right">  <?php echo $MovieInfoRow["title"].' ('.$MovieInfoRow["year"].')' ?> </div>
@@ -201,7 +201,6 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="panel-footer" align="center"> <a href="give-review.php?id=<?php echo $id?>">Leave your review as well</a> </div>
                                 </div>
                             </div> <!--end of notice board-->
 
@@ -260,7 +259,73 @@
 
                             }   //end of if(rma!=false)
                         ?>
+                        </div> <!--end of info row-->
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="page-head-line">Reviews</h1>
+                            </div>
                         </div>
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="notice-board">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                    <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block">
+                                         <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
+                                    </a>
+                            </div>
+                            <div class="panel-body">
+                                <ul>
+                                   
+                                     <li>
+                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
+                                        <b> Vivian</b> 
+                                        <div class="pull-right"><label class="label label-danger "> 
+                                            2016-11-03 13:24:19 
+                                        </label></div>
+                                        <br>
+                                        <p>this movie is great!</p>
+                                    </li>
+                                    <li>
+                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
+                                        <b> Yiran </b> 
+                                        <div class="pull-right"><label class="label label-danger "> 
+                                            2016-11-03 13:24:19 
+                                        </label></div>
+                                        <br>
+                                        <p>this movie is okay!</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+                                <!--
+                                    <div class="panel-heading">
+                                        <b>
+                                            Vivian
+                                        </b>  
+                                        <div class="pull-right">
+                                            at 2016-11-03 13:24:19 
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        This movie sucks.
+                                    </div>
+                                    <div class="panel-footer" align="center">
+                                        <span class="glyphicon glyphicon-star text-danger"></span>
+                                        <span class="glyphicon glyphicon-star text-danger" ></span>
+                                        <span class="glyphicon glyphicon-star-empty text-danger" ></span>
+                                        <span class="glyphicon glyphicon-star-empty text-danger" ></span>
+                                        <span class="glyphicon glyphicon-star-empty text-danger" ></span>
+                                    </div>
+                                </div>
+                            </div>-->
+                    </div> <!--end of review row-->
               <?php }//end of if $rv!=false
                 }//end of if($id!="");
             ?>
@@ -283,10 +348,12 @@
                     </div>
                 </div>
             </div> <!--end of search input row -->
+
+
     <!--search result-->
                 <?php
                     if($keyword!=""){
-                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
+                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%' or CONCAT(first, ' ', last) like '%$keyword%'";
                         $movieQuery = "SELECT id, title, year FROM Movie WHERE title like '%$keyword%'";
                         $ra = $db_connection->query($actorQuery);
                         $rv = $db_connection->query($movieQuery);

@@ -107,7 +107,7 @@
                     //if no input, do nothing 
                     if($keyword==""){}
                     else{
-                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
+                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%' or CONCAT(first, ' ', last) like '%$keyword%'";
                         $movieQuery = "SELECT id, title, year FROM Movie WHERE title like '%$keyword%'";
                         $ra = $db_connection->query($actorQuery);
                         $rv = $db_connection->query($movieQuery);

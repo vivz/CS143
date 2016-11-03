@@ -139,19 +139,19 @@
                                     <div class="panel-body">
                                         <ul >
                                              <li>
-                                             <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
+                                             <span class="glyphicon glyphicon-user text-danger"></span> <b>Name</b>
                                                    <div class="pull-right">  <?php echo $actorInfoRow["first"].' '.$actorInfoRow["last"] ?></div>
                                              </li>
                                              <li>
-                                             <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Sex</b>
+                                             <span class="glyphicon glyphicon-heart text-danger" ></span> <b>Sex</b>
                                                   <div class="pull-right"> <?php echo $actorInfoRow["sex"]?> </div>
                                              </li>
                                              <li>
-                                             <span class="glyphicon glyphicon-comment text-danger" ></span> <b> Date of Birth </b>
+                                             <span class="glyphicon glyphicon-baby-formula text-danger" ></span> <b> Date of Birth </b>
                                                   <div class="pull-right"> <?php echo $actorInfoRow["dob"]?> </div>
                                             </li>
                                             <li>
-                                             <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Date of Death</b>
+                                             <span class="glyphicon glyphicon-option-horizontal text-danger" ></span>  <b>Date of Death</b>
                                                   <div class="pull-right"> <?php echo ($actorInfoRow["dod"]=="")?'Still Alive':$actorInfoRow["dod"] ?></div>
                                             </li>
                                         </ul>
@@ -214,8 +214,9 @@
                         <?php
                             }//end of if(rmr!=null)
                         ?>
-                        </div>
-              <?php }//end of if $rv!=false
+                        </div> <!-- end of first row-->
+              <?php }//end of if $rai!=false
+
                 }//end of if($id!="");
             ?>
     <!--search-->
