@@ -117,8 +117,9 @@
 
                     $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
                     $movieActorQuery= "SELECT aid, role FROM MovieActor WHERE mid=$id";
-
-                    $rvi = $db_connection->query($movieInfoQuery);
+                    $reviewQuery = "SELECT * FROM Review WHERE mid=$id";
+                    $rvi = $db_connection->query($movieInfoQuery);        
+                    $rr = $db_connection->query($reviewQuery); 
                     if($rvi === FALSE){
                         die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
                     }
@@ -196,8 +197,26 @@
                                                 </div>
                                             </li>
                                             <li>
-                                             <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
-                                                  <div class="pull-right">5.00/5 based on 1 people's reviews</div>
+                                             <span class="glyphicon glyphicon-pencil text-danger" ></span> <b>Score</b>
+                                                <div class="pull-right">
+                                                <?php
+                                                    $numQuery = "SELECT COUNT(*) as c FROM Review WHERE mid=$id";  
+                                                    $numReview = $db_connection->query($numQuery); 
+                                                    $avgQuery = "SELECT AVG(rating) as avg FROM Review WHERE mid=$id"; 
+                                                    $avgScore = $db_connection->query($avgQuery);
+                                                    if($numReview && $avgScore)
+                                                    { 
+                                                        $nr=$numReview->fetch_array()['c'];
+                                                        $ar=number_format($avgScore->fetch_array()['avg'], 2);
+                                                        if($nr!=0){
+                                                            echo '<b>'.$ar.' / 5</b> based on <b>'.$nr.'</b> reviews';
+                                                        }
+                                                    }
+                                                    else{
+                                                        echo 'N/A';
+                                                    }
+                                                ?>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -261,7 +280,6 @@
                         ?>
                         </div> <!--end of info row-->
 
-
                         <div class="row">
                             <div class="col-md-12">
                                 <h1 class="page-head-line">Reviews</h1>
@@ -271,39 +289,41 @@
                         <div class="row">
 
                             <div class="col-md-12">
-                                <div class="notice-board">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                    <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block">
-                                         <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
-                                    </a>
+                            <div class="notice-board">
+                            <div class="panel panel-default">
+                            <div class="panel-heading" align="center">
+                                <a href="give-review.php?id=<?php echo $id; ?>" class="btn btn-default btn-block" style="width: 50%;">
+                                     <i class="glyphicon glyphicon-plus text-danger"></i> Add your own review
+                                </a>
                             </div>
+
                             <div class="panel-body">
-                                <ul>
-                                   
-                                     <li>
-                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                        <b> Vivian</b> 
-                                        <div class="pull-right"><label class="label label-danger "> 
-                                            2016-11-03 13:24:19 
-                                        </label></div>
-                                        <br>
-                                        <p>this movie is great!</p>
-                                    </li>
-                                    <li>
-                                     <span class="glyphicon glyphicon-user text-dangeer" ></span> 
-                                        <b> Yiran </b> 
-                                        <div class="pull-right"><label class="label label-danger "> 
-                                            2016-11-03 13:24:19 
-                                        </label></div>
-                                        <br>
-                                        <p>this movie is okay!</p>
-                                    </li>
-                                </ul>
-                            </div>
+                            <?php 
+                                if($rr->num_rows>0){
+                            ?>          
+                                    <ul>
+                                        <?php while($review = $rr->fetch_array()){ ?>
+                                         <li>
+                                            <span class="glyphicon glyphicon-user text-dangeer" ></span> 
+                                            <b><?php echo $review['name'] ?></b> rated <?php echo $review['rating'] ?>/5
+                                            <div class="pull-right"><label class="label label-danger "> 
+                                                <?php echo $review['time'] ?> 
+                                            </label></div>
+                                            <br>
+                                            <p><?php echo $review['comment'] ?></p>
+                                        </li>
+                                        <?php } //end of while?>
+                                    </ul>
+                                    
+                           <?php }
+                                else{
+                                    echo "No reviews submitted";
+                                }
+                            //end of if rr!=false?> 
                         </div>
-                    </div>
-                            </div>
+                        </div>
+                        </div>
+                        </div>
                                 <!--
                                     <div class="panel-heading">
                                         <b>
