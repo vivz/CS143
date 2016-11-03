@@ -163,7 +163,7 @@
                             //establish connection
                             $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                             if($db_connection->connect_errno > 0){
-                                die('Unable to connect to database [' . $db->connect_error . ']');
+                                die('Unable to connect to database [' . $db_connection->connect_error . ']');
                             }
                             //get the user's input
                             $dbPersonType=trim($_GET["identity"]);
@@ -354,7 +354,7 @@
                             //establish connection
                             $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                             if($db_connection->connect_errno > 0){
-                                die('Unable to connect to database [' . $db->connect_error . ']');
+                                die('Unable to connect to database [' . $db_connection->connect_error . ']');
                             }
                             //get the user's input
                             $dbMovieTitle=$_GET["title"];
@@ -453,12 +453,12 @@
                             //establish connection
                             $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                             if($db_connection->connect_errno > 0){
-                                die('Unable to connect to database [' . $db->connect_error . ']');
+                                die('Unable to connect to database [' . $db_connection->connect_error . ']');
                             }
 
                             $movieDB=$db_connection->query("SELECT id, title, year FROM Movie ORDER BY title ASC");
                             if($movieDB==FALSE){
-                                die('Unable to get data from Movie database [' . $db->connect_error . ']');
+                                die('Unable to get data from Movie database [' . $db_connection->connect_error . ']');
                             }
                             $movie="";
                             while ($row=$movieDB->fetch_array()){
@@ -470,7 +470,7 @@
 
                             $actorDB=$db_connection->query("SELECT id, first, last, dob FROM Actor ORDER BY first ASC");
                             if($actorDB==FALSE){
-                                die('Unable to get data from Actor database [' . $db->connect_error . ']');
+                                die('Unable to get data from Actor database [' . $db_connection->connect_error . ']');
                             }
                             $actor="";
                             while ($row=$actorDB->fetch_array()){
@@ -524,7 +524,7 @@
                             else{
                                 $dbQuery="INSERT INTO MovieActor VALUES('$dbMovie','$dbActor','$dbRole')";
                                 if(!$db_connection->query($dbQuery)){
-                                    die('Unable to insert into MovieActor Table [' . $db->connect_error . ']');
+                                    die('Unable to insert into MovieActor Table [' . $db_connection->connect_error . ']');
                                 }
                                 echo "Successfully added to MovieActor Table!";
                             }
@@ -545,12 +545,12 @@
                             <?php
                                 $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                                 if($db_connection->connect_errno > 0){
-                                    die('Unable to connect to database [' . $db->connect_error . ']');
+                                    die('Unable to connect to database [' . $db_connection->connect_error . ']');
                                 }
 
                                 $directorDB=$db_connection->query("SELECT id, first, last, dob FROM Director ORDER BY first ASC");
                                 if($movieDB==FALSE){
-                                    die('Unable to get data from Director database [' . $db->connect_error . ']');
+                                    die('Unable to get data from Director database [' . $db_connection->connect_error . ']');
                                 }
                                 $director="";
                                 while ($row=$directorDB->fetch_array()){
@@ -583,7 +583,7 @@
                             //establish connection
                             $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                             if($db_connection->connect_errno > 0){
-                                die('Unable to connect to database [' . $db->connect_error . ']');
+                                die('Unable to connect to database [' . $db_connection->connect_error . ']');
                             }
                             $dbMovie=$_GET["mmid"];
                             $dbDirector=$_GET["did"];
@@ -598,7 +598,7 @@
                             else{
                                 $dbQuery="INSERT INTO MovieDirector VALUES('$dbMovie','$dbDirector')";
                                 if(!$db_connection->query($dbQuery)){
-                                    die('Unable to insert into MovieDirector Table [' . $db->connect_error . ']');
+                                    die('Unable to insert into MovieDirector Table [' . $db_connection->connect_error . ']');
                                 }
                                 echo "Successfully added to MovieDirector Table!";
                             }

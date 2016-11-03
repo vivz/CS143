@@ -48,7 +48,7 @@ CREATE TABLE Director(
 
 CREATE TABLE MovieGenre(
 	mid INT PRIMARY KEY,
-	genre VARCHAR(20) NOT NULL,
+	genre VARCHAR(200) NOT NULL,
 	FOREIGN KEY (mid) REFERENCES Movie(id)
 ) ENGINE = InnoDB;
 
