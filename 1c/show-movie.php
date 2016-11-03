@@ -107,18 +107,19 @@
         <div class="container">
 
             <?php 
-                $id=$_GET["identifier"];
-                if($id!=""){
-                    $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                $db_connection = new mysqli("localhost", "cs143", "", "CS143");
                     if($db_connection->connect_errno > 0){
                         die('Unable to connect to database [' . $db_connection->connect_error . ']');
-                    }
-                    $movieQuery = "SELECT * FROM Movie WHERE id=$id";
-                    $rv = $db_connection->query($movieQuery);
-                    if($rv === FALSE){
+                }
+                $id=$_GET["identifier"];
+                $keyword=$_GET["search-term"];
+                if($id!=""){
+                    $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
+                    $rvi = $db_connection->query($movieInfoQuery);
+                    if($rvi === FALSE){
                         die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
                     }
-                    else{  ?>
+                    else{ ?>
                          <div class="row">
                             <div class="col-md-12">
                                 <h1 class="page-head-line">Moive Information</h1>
@@ -126,7 +127,7 @@
                         </div>
 
                         <div class="row">
-                         <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="notice-board">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -166,7 +167,6 @@
 
                         </div>
                         <div class="col-md-6">
-                             <!--    Hover Rows  -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     Actors in this movie 
@@ -192,14 +192,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- End  Hover Rows  -->
                         </div>
-                    </div>
-
+                        </div>
               <?php }//end of if $rv!=false
                 }//end of if($id!="");
             ?>
     <!--search-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="page-head-line">Search</h1>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 " >
                     <div class="panel panel-default">
@@ -213,18 +217,8 @@
                 </div>
             </div> <!--end of search input row -->
     <!--search result-->
-            <div class="row">
                 <?php
-                    //establish connection
-                    $keyword=$_GET["search-term"];
-                    echo $keyword;
-                    //if no input, do nothing 
-                    if($keyword==""){}
-                    else{
-                        $db_connection2 = new mysqli("localhost", "cs143", "", "CS143");
-                        if($db_connection2->connect_errno > 0){
-                            die('Unable to connect to database [' . $db_connection2->connect_error . ']');
-                        }
+                    if($keyword!=""){
                         $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
                         $movieQuery = "SELECT id, title, year FROM Movie WHERE title like '%$keyword%'";
                         $ra = $db_connection->query($actorQuery);
@@ -277,7 +271,8 @@
                             </div>
                         </div><!-- End  Hover Rows  -->
                     </div>
-                    <?php } //end of if(ra==true)
+                        <?php
+                        }//end of if(ra==true)
                         if($rv === FALSE){
                             die('Unable to execute SELECT from Movie [' . $db_connection->error .']');
                         }
@@ -324,11 +319,10 @@
                                     </div>
                                 </div>
                             </div>
-                    <?php
-                        }//end of if(rv==true)
-
-                        mysql_close($db_connection2);
-                    }//end of if(keyword!="")
+                   <?php 
+                        }//end of rv!=false
+                    }
+                    mysql_close($db_connection);
                 ?>
                                     
             </div>
