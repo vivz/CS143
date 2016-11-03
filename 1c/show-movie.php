@@ -108,8 +108,8 @@
 
             <?php 
                 $db_connection = new mysqli("localhost", "cs143", "", "CS143");
-                    if($db_connection->connect_errno > 0){
-                        die('Unable to connect to database [' . $db_connection->connect_error . ']');
+                if($db_connection->connect_errno > 0){
+                    die('Unable to connect to database [' . $db_connection->connect_error . ']');
                 }
                 $id=$_GET["identifier"];
                 $keyword=$_GET["search-term"];
@@ -117,7 +117,6 @@
 
                     $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
                     $movieActorQuery= "SELECT aid, role FROM MovieActor WHERE mid=$id";
-                    $didQuery = "SELECT did FROM MovieDirector WHERE mid=$id";
 
                     $rvi = $db_connection->query($movieInfoQuery);
                     if($rvi === FALSE){
@@ -155,7 +154,32 @@
                                             </li>
                                             <li>
                                              <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Director</b>
-                                                  <div class="pull-right">  <?php echo $MovieInfoRow["director"] ?> </div>
+                                                <div class="pull-right">  
+
+                                                <?php 
+                                                    $didQuery = "SELECT did FROM MovieDirector WHERE mid=$id";
+                                                    $rdid = $db_connection->query($didQuery);
+                                                    if($rdid == FALSE){
+                                                         echo $didQuery;
+                                                    }
+                                                    else{
+                                                        $didRow = $rdid->fetch_array();
+                                                        if($didRow){
+                                                            $directorNameQuery= "SELECT first, last, dob FROM Director WHERE id=$didRow[did]";
+                                                            $rdn = $db_connection->query($directorNameQuery);
+                                                            $directorName=$rdn->fetch_array();
+                                                            if($directorName){
+                                                                echo $directorName['first'].' '.$directorName['last'].' ('.$directorName['dob'].')';
+                                                            }else {echo "N/A";}
+                                                        }
+                                                        else{
+                                                            echo "N/A";
+                                                        }
+                                                    }
+                                                    
+                                                    
+                                                ?>
+                                                  </div>
                                             </li>
                                             <li>
                                              <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
