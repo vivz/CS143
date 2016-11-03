@@ -95,7 +95,7 @@
                         <ul id="menu-top" class="nav navbar-nav navbar-right">
                             <li><a  href="index.php">Welcome</a></li>
                             <li><a class="menu-top-active" href="add-content.php">Add Content</a></li>
-                            <li><a href="show-movie.php">Browse</a></li>
+                            <li><a href="browse.php">Browse</a></li>
                        <!--     <li><a href="forms.html">Search</a></li>
                             <li><a href="blank.html">Blank Page</a></li>-->
 
@@ -155,7 +155,7 @@
                             <label>Date Of Death : </label>
                                 <input type="text" class="form-control" placeholder="Leave this blank if he/she still alives"  name="dod" value="<?php echo htmlspecialchars($_GET['dod']);?>"/>
                                 <hr />
-                            <button type="submit" class="btn btn-warning" value="addPerson"><span class="glyphicon glyphicon-envelope"></span> Add to DB</button>
+                            <button type="submit" class="btn btn-warning" value="addPerson"><span class="glyphicon glyphicon-ok"></span> Add to DB</button>
                         </form>
                         </div> <!-- end of panel-body -->
                         <!-- PHP for Add Person -->
@@ -345,7 +345,7 @@
                             <label>Enter Message : </label>
                             <textarea rows="9" class="form-control"></textarea> -->
                             <hr />
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-envelope"></span> Add to DB </button>
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Add to DB </button>
                     </form>
                     </div> 
                     <!-- end of panel-body -->
@@ -499,7 +499,7 @@
                         <label>Role :  </label>
                                 <input type="text" class="form-control" name="role" placeholder="The role of this actor in this movie" value="<?php echo $_GET['role'];?>"/>
                             <hr />
-                        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this! </button>
+                        <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Add this! </button>
                         </form>
                         </div> 
                         <!-- end of panel-body -->
@@ -574,7 +574,7 @@
                                     <?=$director?>
                                 </select>
                             <hr />
-                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-tag"></span> Add this!</button>
+                            <button type="submit" class="btn btn-warning"><span class="glyphicon glyphicon-ok"></span> Add this!</button>
                         </form>
                         </div> 
                         <!-- end of panel-body -->
