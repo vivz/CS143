@@ -147,6 +147,13 @@
                                     die('Unable to insert to Review [' . $db_connection->error . ']');
                                 }
                                 echo "Your review has been successfully added!";
+                                echo "<hr />";
+                                echo "Thank you for your comment!"; 
+                        ?>
+                                <a href="show-movie.php?identifier=<?php echo $mid?>">
+                                    <?php echo "click here to go back to see the movie"; ?>
+                                </a>
+                        <?php
                             }
                             mysql_close($db_connection);
                         ?>
