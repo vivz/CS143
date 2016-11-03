@@ -107,8 +107,8 @@
                     //if no input, do nothing 
                     if($keyword==""){}
                     else{
-                        $actorQuery = "SELECT first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
-                        $movieQuery = "SELECT title, year FROM Movie WHERE title like '%$keyword%'";
+                        $actorQuery = "SELECT id, first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
+                        $movieQuery = "SELECT id, title, year FROM Movie WHERE title like '%$keyword%'";
                         $ra = $db_connection->query($actorQuery);
                         $rv = $db_connection->query($movieQuery);
                         if($ra === FALSE){
@@ -127,8 +127,7 @@
                                             <thead >
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
+                                                    <th>Name</th>
                                                     <th>Date of Birth</th>
                                                 </tr>
                                             </thead>
@@ -142,14 +141,15 @@
                                         <td>
                                             <?php echo $i; $i=$i+1; ?>
                                         </td>
-                                        <td> 
-                                            <?php echo $row["first"]; ?>
+                                        <td>
+                                            <a href="show-actor.php?identifier=<?php echo $row["id"]?>">
+                                                <?php echo $row["first"]."  ".$row["last"]; ?>
+                                            </a>
                                         </td>
                                         <td> 
-                                            <?php echo $row["last"]; ?>
-                                        </td>
-                                        <td> 
-                                            <?php echo $row["dob"]; ?>
+                                            <a href="show-actor.php?identifier=<?php echo $row["id"]?>">
+                                                <?php echo $row["dob"]; ?>
+                                            </a>
                                         </td>
                                     </tr>
                             <?php } ?> <!--end of while-->
@@ -189,11 +189,14 @@
                                                                 <td>
                                                                     <?php echo $i; $i=$i+1; ?>
                                                                 </td>
-                                                                <td> 
-                                                                    <?php echo $row["title"]; ?>
+                                                                <td> <a href="show-movie.php?identifier=<?php echo $row["id"]?>">
+                                                                        <?php echo $row["title"]; ?>
+                                                                    </a>
                                                                 </td>
                                                                 <td> 
-                                                                    <?php echo $row["year"]; ?>
+                                                                    <a href="show-movie.php?identifier=<?php echo $row["id"]?>">
+                                                                        <?php echo $row["year"]; ?>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
                                                 <?php } ?> <!--end of while-->

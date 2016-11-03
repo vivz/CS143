@@ -105,6 +105,12 @@
     <!-- MENU SECTION END-->
     <div class="content-wrapper">
         <div class="container">
+
+            <?php 
+                $id=$_GET["identifier"];
+                echo $id;
+            ?>
+
             <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-head-line">Moive Information</h1>
@@ -112,7 +118,6 @@
                 </div>
                
                 <div class="row">
-
                  <div class="col-md-6">
                     <div class="notice-board">
                         <div class="panel panel-default">
