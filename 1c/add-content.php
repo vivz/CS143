@@ -200,7 +200,6 @@
                             else if(($getDOD!="")&&(!checkdate($dbDOD["month"], $dbDOD["day"], $dbDOD["year"]))){
                                 echo "You must specify a valid date of death.";
                             }
-                        
                             else{
                                 if($dbPersonType=="Actor"){
                                     if($getDOD==""){

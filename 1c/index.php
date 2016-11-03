@@ -84,20 +84,18 @@
                 <div class="col-md-6 col-md-offset-3 " >
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/>
-
-                            <a href="#" class="btn btn-primary search-box">Search</a>
+                        <form method = "GET" action="index.php">
+                            <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/ name="search-term" value="<?php echo $_GET['search-term'];?>"/>
+                            <input type="submit" value="Search" class="btn btn-primary search-box">
+                        </form>
                         </div>
                         <!--"SELECT first, last, dob FROM Actor WHERE last like '%"+ var +"%' or first like '%"+ var +"%';" -->
                     </div>
                 </div>
             </div>
+                
+
             <div class="row">
-            <form action="query.php" method="GET">
-                <textarea name="query" cols="60" rows="8">
-                </textarea>
-                <input type="submit" value="Submit">
-            </form>
                 <?php
                     //establish connection
                     $db_connection = new mysqli("localhost", "cs143", "", "CS143");
@@ -105,130 +103,113 @@
                         die('Unable to connect to database [' . $db->connect_error . ']');
                     }
 
-                    //get the user's query
-                    $mysqlQuery=$_GET["query"];
-                    
-                    //issue a query using database connection
-                    //if query is erroneous, produce error message "gracefully"
-                    $rs = $db_connection->query($mysqlQuery);
-                    if($rs === FALSE){
-                        printf("Cannot execute the query. \n");
-                    }else{
-                        printf("Success.\n");
-                    }
-
-                ?>
-
-                    <h3>Results from MySQL:</h3>
-                <?php
-                    //print out header fields
-                    $finfo = mysqli_fetch_fields($rs);
-                    foreach ($finfo as $val) {
-                            printf("%s\n",$val->name);
-                    }
-                ?>
-
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                     <!--    Hover Rows  -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Related Actors
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    $keyword=$_GET["search-term"];
+                    //if no input, do nothing 
+                    if($keyword==""){}
+                    else{
+                        $actorQuery = "SELECT first, last, dob FROM Actor WHERE last like '%$keyword%' or first like '%$keyword%'";
+                        $movieQuery = "SELECT title, year FROM Movie WHERE title like '%$keyword%'";
+                        $ra = $db_connection->query($actorQuery);
+                        $rv = $db_connection->query($movieQuery);
+                        if($ra === FALSE){
+                            die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
+                        }
+                        else{?>
+                            <div class="col-md-6">
+                             <!--    Hover Rows  -->
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Related Actors
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead >
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>First Name</th>
+                                                    <th>Last Name</th>
+                                                    <th>Date of Birth</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                        <?php
+                            $i=1;
+                            while($row = $ra->fetch_array()){
+                                //foreach ($row as $val) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $i; $i=$i+1; ?>
+                                        </td>
+                                        <td> 
+                                            <?php echo $row["first"]; ?>
+                                        </td>
+                                        <td> 
+                                            <?php echo $row["last"]; ?>
+                                        </td>
+                                        <td> 
+                                            <?php echo $row["dob"]; ?>
+                                        </td>
+                                    </tr>
+                            <?php } ?> <!--end of while-->
+                                        </tbody>
+                                        </table>
+                                </div>
                             </div>
-                        </div>
+                        </div><!-- End  Hover Rows  -->
                     </div>
-                    <!-- End  Hover Rows  -->
-                </div>
-
-                <div class="col-md-6">
-                     <!--    Hover Rows  -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Related Movies
-                        </div>
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <?php } //end of if(ra==true)
+                        if($rv === FALSE){
+                            die('Unable to execute SELECT from Movie [' . $db_connection->error .']');
+                        }
+                        else{ ?>
+                            <div class="col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Related Movies
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Title</th>
+                                                        <th>Year</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                <?php 
+                                                    $i=1;
+                                                    while($row = $rv->fetch_array()){
+                                                        //foreach ($row as $val) {
+                                                        ?>
+                                                            <tr>
+                                                                <td>
+                                                                    <?php echo $i; $i=$i+1; ?>
+                                                                </td>
+                                                                <td> 
+                                                                    <?php echo $row["title"]; ?>
+                                                                </td>
+                                                                <td> 
+                                                                    <?php echo $row["year"]; ?>
+                                                                </td>
+                                                            </tr>
+                                                <?php } ?> <!--end of while-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <!-- End  Hover Rows  -->
-                </div>
+                    <?php
+                        }//end of if(rv==true)
+
+                    }//end of if(keyword!="")
+                    mysql_close($db_connection);
+                ?>
+                                    
             </div>
            
         </div>
