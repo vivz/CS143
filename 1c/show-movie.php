@@ -116,6 +116,7 @@
                 if($id!=""){
 
                     $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
+                    $movieActorQuery= "SELECT aid, role FROM MovieActor WHERE mid=$id";
                     $didQuery = "SELECT did FROM MovieDirector WHERE mid=$id";
 
                     $rvi = $db_connection->query($movieInfoQuery);
@@ -171,10 +172,18 @@
                             </div> <!--end of notice board-->
 
                         </div>
+                        <?php 
+                            $rma = $db_connection->query($movieActorQuery);
+                            if($rma == FALSE){
+                                die('Unable to execute SELECT from MovieActor [' . $db_connection->error .']');
+                            }
+                            else{ 
+                                $i=1;
+                        ?>
                         <div class="col-md-6">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Actors in this movie 
+                                    Casting
                                 </div>
                                 <div class="panel-body">
                                     <div class="table-responsive">
@@ -187,17 +196,36 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <?php while($row = $rma->fetch_array()){ ?>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
+                                                    <td><?php echo $i; $i=$i+1?></td>
+                                                    <td><a href="show-actor.php?identifier=<?php echo $row[aid]?>"> 
+                                                        <?php 
+                                                            $actorNameQuery= "SELECT first, last FROM Actor WHERE id=$row[aid]";
+                                                            $ram = $db_connection->query($actorNameQuery);
+                                                            if($ram == FALSE){
+                                                                 die('Unable to execute SELECT from MovieActor [' . $db_connection->error .']');
+                                                            }
+                                                            else{
+                                                                $actorName=$ram->fetch_array();
+                                                                echo $actorName['first'].' '.$actorName['last'];
+                                                            }
+                                                        ?>
+                                                    </a></td>
+                                                    <td><?php echo '"'.$row['role'].'"' ?></td>
                                                 </tr>
+                                            <?php } //end of while?>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <?php
+
+
+                            }   //end of if(rma!=false)
+                        ?>
                         </div>
               <?php }//end of if $rv!=false
                 }//end of if($id!="");
