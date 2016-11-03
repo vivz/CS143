@@ -90,7 +90,7 @@
                                         die('Unable to connect to database [' . $db_connection->connect_error . ']');
                                     }
 
-                                    $mid=$_GET["identifier"];
+                                    $mid=$_GET["id"];
                                     $rs=$db_connection->query("SELECT title FROM Movie WHERE id=$mid");
                                     if($rs==FALSE){
                                         die('Unable to fetch data [' . $db_connection->error .']');
