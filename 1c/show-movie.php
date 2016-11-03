@@ -114,12 +114,17 @@
                 $id=$_GET["identifier"];
                 $keyword=$_GET["search-term"];
                 if($id!=""){
+
                     $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
+                    $didQuery = "SELECT did FROM MovieDirector WHERE mid=$id";
+
                     $rvi = $db_connection->query($movieInfoQuery);
                     if($rvi === FALSE){
                         die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
                     }
-                    else{ ?>
+                    else{ 
+                        $MovieInfoRow = $rvi->fetch_array();
+                        ?>
                          <div class="row">
                             <div class="col-md-12">
                                 <h1 class="page-head-line">Moive Information</h1>
@@ -137,19 +142,19 @@
                                         <ul >
                                              <li>
                                              <span class="glyphicon glyphicon-film text-danger"></span> <b>Title</b>
-                                                   <div class="pull-right">  Lorem ipsum dolor sit </div>
+                                                   <div class="pull-right">  <?php echo $MovieInfoRow["title"].' ('.$MovieInfoRow["year"].')' ?> </div>
                                              </li>
                                              <li>
                                              <span class="glyphicon glyphicon-facetime-video text-danger" ></span> <b>Producer</b>
-                                                  <div class="pull-right"> Lorem ipsum </div>
+                                                  <div class="pull-right"> <?php echo $MovieInfoRow["company"] ?>  </div>
                                              </li>
                                              <li>
                                              <span class="glyphicon glyphicon-comment text-danger" ></span> <b> MPAA Rating </b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                                  <div class="pull-right">  <?php echo $MovieInfoRow["rating"] ?> </div>
                                             </li>
                                             <li>
                                              <span class="glyphicon glyphicon-user text-danger" ></span>  <b>Director</b>
-                                                  <div class="pull-right"> Lorem ipsum dolor sit amet ipsum dolor sit amet</div>
+                                                  <div class="pull-right">  <?php echo $MovieInfoRow["director"] ?> </div>
                                             </li>
                                             <li>
                                              <span class="glyphicon glyphicon-th text-danger" ></span>  <b>Genre</b>
