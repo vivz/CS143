@@ -46,43 +46,9 @@
                 </button>
                 <div class="navbar-title">
                 <h1>Movie DB Query System</h1>
-                   <!-- <img src="assets/img/logo.png" />-->
                 </div>
 
             </div>
-
-          <!--  <div class="left-div">
-                <div class="user-settings-wrapper">
-                    <ul class="nav">
-
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                                <span class="glyphicon glyphicon-user" style="font-size: 25px;"></span>
-                            </a>
-                            <div class="dropdown-menu dropdown-settings">
-                                <div class="media">
-                                    <a class="media-left" href="#">
-                                        <img src="assets/img/64-64.jpg" alt="" class="img-rounded" />
-                                    </a>
-                                    <div class="media-body">
-                                        <h4 class="media-heading">Jhon Deo Alex </h4>
-                                        <h5>Developer & Designer</h5>
-
-                                    </div>
-                                </div>
-                                <hr />
-                                <h5><strong>Personal Bio : </strong></h5>
-                                Anim pariatur cliche reprehen derit.
-                                <hr />
-                                <a href="#" class="btn btn-info btn-sm">Full Profile</a>&nbsp; <a href="login.html" class="btn btn-danger btn-sm">Logout</a>
-
-                            </div>
-                        </li>
-
-
-                    </ul>
-                </div>
-            </div> -->
         </div> 
     </div>
     <!-- LOGO HEADER END-->
@@ -116,20 +82,51 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3 " >
-                        <div class="panel panel-default">
-                          <!--  <div class="panel-heading">
-                                Search
-                            </div>-->
-                            <div class="panel-body">
-                                <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <input type="text" class="form-control" placeholder="Search for movies, actors, directors..."/>
 
-                                <a href="#" class="btn btn-primary search-box">Search</a>
-                            </div>
-                         <!--   <div class="panel-footer">
-                                Panel Footer
-                            </div>-->
+                            <a href="#" class="btn btn-primary search-box">Search</a>
                         </div>
+                        <!--"SELECT first, last, dob FROM Actor WHERE last like '%"+ var +"%' or first like '%"+ var +"%';" -->
+                    </div>
                 </div>
+            </div>
+            <div class="row">
+            <form action="query.php" method="GET">
+                <textarea name="query" cols="60" rows="8">
+                </textarea>
+                <input type="submit" value="Submit">
+            </form>
+                <?php
+                    //establish connection
+                    $db_connection = new mysqli("localhost", "cs143", "", "CS143");
+                    if($db_connection->connect_errno > 0){
+                        die('Unable to connect to database [' . $db->connect_error . ']');
+                    }
+
+                    //get the user's query
+                    $mysqlQuery=$_GET["query"];
+                    
+                    //issue a query using database connection
+                    //if query is erroneous, produce error message "gracefully"
+                    $rs = $db_connection->query($mysqlQuery);
+                    if($rs === FALSE){
+                        printf("Cannot execute the query. \n");
+                    }else{
+                        printf("Success.\n");
+                    }
+
+                ?>
+
+                    <h3>Results from MySQL:</h3>
+                <?php
+                    //print out header fields
+                    $finfo = mysqli_fetch_fields($rs);
+                    foreach ($finfo as $val) {
+                            printf("%s\n",$val->name);
+                    }
+                ?>
 
             </div>
             <div class="row">
