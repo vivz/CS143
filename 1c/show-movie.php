@@ -117,8 +117,9 @@
 
                     $movieInfoQuery = "SELECT * FROM Movie WHERE id=$id";
                     $movieActorQuery= "SELECT aid, role FROM MovieActor WHERE mid=$id";
-
-                    $rvi = $db_connection->query($movieInfoQuery);
+                    $reviewQuery = "SELECT * FROM Review WHERE mid=$id";
+                    $rvi = $db_connection->query($movieInfoQuery);        
+                    $rr = $db_connection->query($reviewQuery); 
                     if($rvi === FALSE){
                         die('Unable to execute SELECT from Actor [' . $db_connection->error .']');
                     }
@@ -196,8 +197,26 @@
                                                 </div>
                                             </li>
                                             <li>
-                                             <span class="glyphicon glyphicon-pencil text-danger" ></span>  <b>Score</b>
-                                                  <div class="pull-right">5.00/5 based on 1 people's reviews</div>
+                                             <span class="glyphicon glyphicon-pencil text-danger" ></span> <b>Score</b>
+                                                <div class="pull-right">
+                                                <?php
+                                                    $numQuery = "SELECT COUNT(*) as c FROM Review WHERE mid=$id";  
+                                                    $numReview = $db_connection->query($numQuery); 
+                                                    $avgQuery = "SELECT AVG(rating) as avg FROM Review WHERE mid=$id"; 
+                                                    $avgScore = $db_connection->query($avgQuery);
+                                                    if($numReview && $avgScore)
+                                                    { 
+                                                        $nr=$numReview->fetch_array()['c'];
+                                                        $ar=number_format($avgScore->fetch_array()['avg'], 2);
+                                                        if($nr!=0){
+                                                            echo '<b>'.$ar.' / 5</b> based on <b>'.$nr.'</b> reviews';
+                                                        }
+                                                    }
+                                                    else{
+                                                        echo 'N/A';
+                                                    }
+                                                ?>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -261,10 +280,6 @@
                         ?>
                         </div> <!--end of info row-->
 
-                        <?php 
-                            $reviewQuery = "SELECT * FROM Review WHERE mid=$id";
-                            $rr = $db_connection->query($reviewQuery); 
-                        ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <h1 class="page-head-line">Reviews</h1>
